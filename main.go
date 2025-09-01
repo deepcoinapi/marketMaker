@@ -1,16 +1,15 @@
 // go-demo-market-maker/main.go
 // A minimal, production-minded demo market-making bot in Go.
-// - Connects to DeepCoin public WS (books-l2-tbt) for one instrument
+// - Connects to DeepCoin public WS  for one instrument
 // - Maintains top-of-book and computes mid price
 // - Places/cancels maker orders around mid with inventory/risk controls
-// - ExchangeClient is pluggable: we ship a Mock client; swap with real DeepCoin client
 // DISCLAIMER: Demo only. Add robust error handling, persistence, retries, and signing for production.
 
 package main
 
 import (
 	"context"
-	"log"
+	"fmt"
 	"marketMaker/exchange"
 	"marketMaker/strategy"
 	"os/signal"
@@ -28,7 +27,7 @@ func main() {
 	go func() {
 		for {
 			if err := exchange.RunPublicWS(ctx, cfg.WSPublicURL, cfg.InstID, ob); err != nil {
-				log.Printf("ws error: %v; reconnecting in 2s", err)
+				fmt.Printf("ws error: %v; reconnecting in 2s", err)
 				time.Sleep(2 * time.Second)
 			} else {
 				return
