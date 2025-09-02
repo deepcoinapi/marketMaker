@@ -18,6 +18,7 @@ import (
 )
 
 func main() {
+	fmt.Println("start...")
 	cfg := strategy.DefaultConfig()
 
 	ctx, cancel := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
